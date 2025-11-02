@@ -33,17 +33,18 @@ public class OportunityEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name="custumer_id")
-    private CustumerEntity custumer;
+    @JoinColumn(name="customer_id")
+    private CustomerEntity customer;
     @ManyToOne
     @JoinColumn(name="salesman_id")
     private SalesmanEntity salesman;
     @ManyToOne
     @JoinColumn(name="course_id")
-    private int courseId;
+    private CourseEntity course;
     @OneToMany
     private List<InterationEntity> interations = new ArrayList<>();
-    @OneToOne(mappedBy="oportunities")
+    @OneToOne(mappedBy="oportunity")
+    private SaleEntity sale;
     @Column(name="status")
     @Enumerated(value=EnumType.STRING)
     private SalesStatus salesStatus;

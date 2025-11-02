@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,11 +19,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="courses")
+@Entity
 public class CourseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @OneToMany
+    @OneToMany(mappedBy="course")
     private  List<OportunityEntity> oportunities = new ArrayList<>();
     @Column(name="name", length=150)
     private String name;

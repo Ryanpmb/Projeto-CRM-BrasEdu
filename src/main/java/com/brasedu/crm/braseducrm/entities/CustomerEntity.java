@@ -7,9 +7,11 @@ import java.util.List;
 import com.brasedu.crm.braseducrm.enums.OportunityStatus;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +22,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="custumers")
-public class CustumerEntity extends UserEntity {
-    @OneToMany(mappedBy="custumers")
+@Table(name="customers")
+@Entity
+@PrimaryKeyJoinColumn(name="userId")
+public class CustomerEntity extends UserEntity {
+    @OneToMany(mappedBy="customer")
     private List<OportunityEntity> oportunities = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @Column(name="lead_status")
