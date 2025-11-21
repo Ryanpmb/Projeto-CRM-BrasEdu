@@ -6,6 +6,7 @@ import com.brasedu.crm.braseducrm.dto.CreateSalesmanDto;
 import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
 import com.brasedu.crm.braseducrm.entities.UserEntity;
 import com.brasedu.crm.braseducrm.repositories.SalesmanRepository;
+import com.brasedu.crm.braseducrm.security.SecurityConfig;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class SalesmanService {
     private final SalesmanRepository salesmanRepository;
     private final UserService userService;
+    private final SecurityConfig securityConfig;
 
     public SalesmanEntity store(CreateSalesmanDto newSalesman) 
     {
@@ -26,7 +28,9 @@ public class SalesmanService {
 
         SalesmanEntity salesmanEntity = new SalesmanEntity();
         salesmanEntity.setId(storedUser.getId());
-  
+        String passwordBcripted = securityConfig.passwordEncoder().encode(newSalesman.password);
+        salesmanEntity.setPassword(passwordBcripted);
+        salesmanEntity.setDepartament(newSalesman.departament);
         return salesmanRepository.save(salesmanEntity);
     }
 
