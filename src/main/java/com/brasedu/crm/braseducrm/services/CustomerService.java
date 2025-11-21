@@ -19,15 +19,54 @@ public class CustomerService {
 
     public CustomerEntity store(CreateCustomerDto newCustumer) 
     {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName(newCustumer.name);
-        userEntity.setEmail(newCustumer.email);
-        userEntity.setPhone(newCustumer.phone);
-        userEntity.setBirthDate(newCustumer.birthDate);
+        UserEntity userEntity = this.parseCustumerDtoToUserEntity(newCustumer);
         UserEntity storedUser = userService.store(userEntity);
+
+        if(storedUser == null) {
+            throw new RuntimeException("Failed to store user");
+        }  
+
         CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setId(storedUser.getId());
         customerEntity.setLeadStatus(OportunityStatus.NEW);
         customerEntity.setOrigin(newCustumer.origin);
+        return customerRepository.save(customerEntity);
+    }
+
+    public CustomerEntity findById(String id) {
+        return customerRepository.findById(id).orElse(null);
+    }
+
+    public CustomerEntity update(CustomerEntity newCustomerInformations, String id)
+    {
+        CustomerEntity olderCustomer = this.findById(id);
+
+        if(olderCustomer == null) {
+            throw new RuntimeException("Customer not found");
+        }
+
+        olderCustomer.setLeadStatus(newCustomerInformations.getLeadStatus());
+        olderCustomer.setOrigin(newCustomerInformations.getOrigin());
+        return customerRepository.save(olderCustomer);
+    }
+
+    public Iterable<CustomerEntity> findAll()
+    {
+        return customerRepository.findAll();
+    }
+
+    public void deleteById(String id)
+    {
+        customerRepository.deleteById(id);
+    }
+
+
+    private UserEntity parseCustumerDtoToUserEntity(CreateCustomerDto customerDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(customerDto.name);
+        userEntity.setEmail(customerDto.email);
+        userEntity.setPhone(customerDto.phone);
+        userEntity.setBirthDate(customerDto.birthDate);
+        return userEntity;
     }
 }
