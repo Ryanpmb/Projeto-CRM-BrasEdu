@@ -15,8 +15,7 @@ public class SalesmanService {
     private final SalesmanRepository salesmanRepository;
     private final SecurityConfig securityConfig;
 
-    public SalesmanEntity store(CreateSalesmanDto newSalesman) 
-    {
+    public SalesmanEntity store(CreateSalesmanDto newSalesman) {
         SalesmanEntity salesmanEntity = new SalesmanEntity();
         salesmanEntity.setName(newSalesman.name);
         salesmanEntity.setEmail(newSalesman.email);
@@ -32,11 +31,10 @@ public class SalesmanService {
         return salesmanRepository.findById(id).orElse(null);
     }
 
-    public SalesmanEntity update(SalesmanEntity newSalesmanInformations, String id)
-    {
+    public SalesmanEntity update(SalesmanEntity newSalesmanInformations, String id) {
         SalesmanEntity olderSalesman = this.findById(id);
 
-        if(olderSalesman == null) {
+        if (olderSalesman == null) {
             throw new RuntimeException("Customer not found");
         }
 
@@ -44,13 +42,22 @@ public class SalesmanService {
         return salesmanRepository.save(olderSalesman);
     }
 
-    public Iterable<SalesmanEntity> findAll()
-    {
+    public Iterable<SalesmanEntity> findAll() {
         return salesmanRepository.findAll();
     }
 
-    public void deleteById(String id)
-    {
+    public void deleteById(String id) {
         salesmanRepository.deleteById(id);
+    }
+
+    public SalesmanEntity authenticate(String email, String rawPassword) {
+        SalesmanEntity salesman = salesmanRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!this.securityConfig.passwordEncoder().matches(rawPassword, salesman.getPassword())) {
+            throw new RuntimeException("Senha inválida");
+        }
+
+        return salesman;
     }
 }
