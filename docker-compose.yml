@@ -1,5 +1,22 @@
+networks:
+  crm-network:
+    driver: bridge
+
 services:
   brasedu-crm-api:
     build: .
     ports:
       - "8080:8080"
+    networks:
+      - crm-network
+
+  brasedu-crm-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: crmuser
+      POSTGRES_PASSWORD: crmpassword
+      POSTGRES_DB: crmdb
+    volumes:
+      - ./crm-db-data:/var/lib/postgresql/data
+    networks:
+      - crm-network
