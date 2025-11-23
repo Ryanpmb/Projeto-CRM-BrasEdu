@@ -5,18 +5,25 @@ networks:
 services:
   brasedu-crm-api:
     build: .
+    container_name: brasedu-crm-backend
     ports:
       - "8080:8080"
     networks:
       - crm-network
 
   brasedu-crm-db:
-    image: postgres:13
+    container_name: brasedu-crm-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      POSTGRES_USER: crmuser
-      POSTGRES_PASSWORD: crmpassword
-      POSTGRES_DB: crmdb
-    volumes:
-      - ./crm-db-data:/var/lib/postgresql/data
+      SA_PASSWORD: "Crm@1234"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
     networks:
       - crm-network
+    volumes:
+      - ./docker/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:

@@ -13,7 +13,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "InterTaFd";
+    private static final String SECRET_KEY = "KJH8j23nNHD8u3h4JH89sdHFJHsd89fsdf98sd98fds=";
 
     public String generateToken(SalesmanUserDetails userDetails) {
         return Jwts.builder()
