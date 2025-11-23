@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.brasedu.crm.braseducrm.dto.CreateSalesmanDto;
 import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
-import com.brasedu.crm.braseducrm.entities.UserEntity;
 import com.brasedu.crm.braseducrm.repositories.SalesmanRepository;
 import com.brasedu.crm.braseducrm.security.SecurityConfig;
 
@@ -14,20 +13,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SalesmanService {
     private final SalesmanRepository salesmanRepository;
-    private final UserService userService;
     private final SecurityConfig securityConfig;
 
     public SalesmanEntity store(CreateSalesmanDto newSalesman) 
     {
-        UserEntity userEntity = this.parseSalesmanDtoToUserEntity(newSalesman);
-        UserEntity storedUser = userService.store(userEntity);
-
-        if(storedUser == null) {
-            throw new RuntimeException("Failed to store user");
-        }  
-
         SalesmanEntity salesmanEntity = new SalesmanEntity();
-        salesmanEntity.setId(storedUser.getId());
+        salesmanEntity.setName(newSalesman.name);
+        salesmanEntity.setEmail(newSalesman.email);
+        salesmanEntity.setPhone(newSalesman.phone);
+        salesmanEntity.setBirthDate(newSalesman.birthDate);
         String passwordBcripted = securityConfig.passwordEncoder().encode(newSalesman.password);
         salesmanEntity.setPassword(passwordBcripted);
         salesmanEntity.setDepartament(newSalesman.departament);
@@ -59,15 +53,4 @@ public class SalesmanService {
     {
         salesmanRepository.deleteById(id);
     }
-
-
-    private UserEntity parseSalesmanDtoToUserEntity(CreateSalesmanDto salesmanDto) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName(salesmanDto.name);
-        userEntity.setEmail(salesmanDto.email);
-        userEntity.setPhone(salesmanDto.phone);
-        userEntity.setBirthDate(salesmanDto.birthDate);
-        return userEntity;
-    }
-
 }
