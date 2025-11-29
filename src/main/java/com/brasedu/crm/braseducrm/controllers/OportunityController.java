@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brasedu.crm.braseducrm.dto.CreateOpportunityDto;
 import com.brasedu.crm.braseducrm.entities.OportunityEntity;
 import com.brasedu.crm.braseducrm.services.OportunityService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,9 +33,9 @@ public class OportunityController {
     }
 
     @PostMapping
-    public ResponseEntity<OportunityEntity> include(@RequestBody OportunityEntity oportunity) {
+    public ResponseEntity<OportunityEntity> include(@Valid @RequestBody CreateOpportunityDto oportunity) {
         OportunityEntity newOportunity = oportunityService.include(oportunity);
-
+        
         if (newOportunity != null) {
             return new ResponseEntity<>(newOportunity, HttpStatus.CREATED);
         } else {

@@ -17,7 +17,7 @@ import com.brasedu.crm.braseducrm.services.SalesmanService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/salesmen")
+@RequestMapping(value = "/salesman")
 @RequiredArgsConstructor
 public class SalesmanController {
     private final SalesmanService salesmanService;

@@ -41,6 +41,10 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public CourseEntity findById(int id) {
+        return courseRepository.findById(id).orElse(null);
+    }
+
     public void delete(Integer id) {
         courseRepository.deleteById(id);
     }

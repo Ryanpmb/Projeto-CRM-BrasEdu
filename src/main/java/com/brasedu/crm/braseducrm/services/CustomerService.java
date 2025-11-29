@@ -1,10 +1,11 @@
 package com.brasedu.crm.braseducrm.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.brasedu.crm.braseducrm.dto.CreateCustomerDto;
 import com.brasedu.crm.braseducrm.entities.CustomerEntity;
-import com.brasedu.crm.braseducrm.entities.UserEntity;
 import com.brasedu.crm.braseducrm.enums.OportunityStatus;
 import com.brasedu.crm.braseducrm.repositories.CustomerRepository;
 
@@ -14,17 +15,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final UserService userService;
 
-    public CustomerEntity store(CreateCustomerDto newCustumer) {
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setName(newCustumer.name);
-        customerEntity.setEmail(newCustumer.email);
-        customerEntity.setPhone(newCustumer.phone);
-        customerEntity.setBirthDate(newCustumer.birthDate);
-        customerEntity.setLeadStatus(OportunityStatus.NEW);
-        customerEntity.setOrigin(newCustumer.origin);
-        return customerRepository.save(customerEntity);
+    public CustomerEntity store(CreateCustomerDto newCustumer) throws Exception {
+        try {
+            CustomerEntity customerEntity = new CustomerEntity();
+            customerEntity.setName(newCustumer.name);
+            customerEntity.setEmail(newCustumer.email);
+            customerEntity.setPhone(newCustumer.phone);
+            customerEntity.setBirthDate(newCustumer.birthDate);
+            customerEntity.setLeadStatus(OportunityStatus.NEW);
+            customerEntity.setOrigin(newCustumer.origin);
+            return customerRepository.save(customerEntity);
+        } catch (Exception e) {
+            throw new Exception("Stored user fail");
+        }
     }
 
     public CustomerEntity findById(String id) {
@@ -43,7 +47,7 @@ public class CustomerService {
         return customerRepository.save(olderCustomer);
     }
 
-    public Iterable<CustomerEntity> findAll() {
+    public List<CustomerEntity> findAll() {
         return customerRepository.findAll();
     }
 

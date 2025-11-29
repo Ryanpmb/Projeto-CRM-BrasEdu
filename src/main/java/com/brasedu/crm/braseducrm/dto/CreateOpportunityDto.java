@@ -1,0 +1,16 @@
+package com.brasedu.crm.braseducrm.dto;
+
+import java.time.LocalDate;
+
+import com.brasedu.crm.braseducrm.enums.SalesStatus;
+
+import lombok.Data;
+
+@Data
+public class CreateOpportunityDto {
+    public String customerId;
+    public String salesmanId;
+    public int courseId;
+    public SalesStatus status;
+    public LocalDate finished_in;
+}

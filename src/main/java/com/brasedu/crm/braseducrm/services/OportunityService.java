@@ -5,7 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.brasedu.crm.braseducrm.dto.CreateOpportunityDto;
+import com.brasedu.crm.braseducrm.entities.CourseEntity;
+import com.brasedu.crm.braseducrm.entities.CustomerEntity;
 import com.brasedu.crm.braseducrm.entities.OportunityEntity;
+import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
 import com.brasedu.crm.braseducrm.repositories.OportunityRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -14,9 +18,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OportunityService {
     private final OportunityRepository oportunityRepository;
+    private final CourseService courseService;
+    private final CustomerService customerService;
+    private final SalesmanService salesmanService;
 
-    public OportunityEntity include(OportunityEntity oportunity) {
-        return oportunityRepository.save(oportunity);
+    public OportunityEntity include(CreateOpportunityDto oportunity) {
+        CourseEntity course = this.courseService.findById(oportunity.getCourseId());
+        CustomerEntity customer = this.customerService.findById(oportunity.getCustomerId());
+        SalesmanEntity salesman = this.salesmanService.findById(oportunity.getSalesmanId());
+
+        OportunityEntity oportunityEntity = new OportunityEntity();
+        oportunityEntity.setCourse(course);
+        oportunityEntity.setCustomer(customer);
+        oportunityEntity.setSalesman(salesman);
+        oportunityEntity.setSalesStatus(oportunity.getStatus());
+
+        return oportunityRepository.save(oportunityEntity);
     }
 
     public OportunityEntity edit(int id, OportunityEntity oportunity) {
