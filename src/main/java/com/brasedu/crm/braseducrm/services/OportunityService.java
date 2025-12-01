@@ -1,11 +1,12 @@
 package com.brasedu.crm.braseducrm.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.brasedu.crm.braseducrm.dto.CreateOpportunityDto;
+import com.brasedu.crm.braseducrm.dto.request.CreateOpportunityDto;
+import com.brasedu.crm.braseducrm.dto.request.UpdateOpportunityDTO;
+import com.brasedu.crm.braseducrm.dto.response.ResponseOportunityDTO;
 import com.brasedu.crm.braseducrm.entities.CourseEntity;
 import com.brasedu.crm.braseducrm.entities.CustomerEntity;
 import com.brasedu.crm.braseducrm.entities.OportunityEntity;
@@ -36,29 +37,30 @@ public class OportunityService {
         return oportunityRepository.save(oportunityEntity);
     }
 
-    public OportunityEntity edit(int id, OportunityEntity oportunity) {
-        Optional<OportunityEntity> existingOportunity = oportunityRepository.findById(id);
+    public ResponseOportunityDTO edit(int id, UpdateOpportunityDTO oportunity) {
+        OportunityEntity existingOportunity = oportunityRepository.findById(id).orElse(null);
 
-        if (existingOportunity.isPresent()) {
-            OportunityEntity updatedOportunity = existingOportunity.get();
+        if (existingOportunity != null) {
+            CourseEntity course = this.courseService.findById(oportunity.getCourseId());
+            SalesmanEntity salesman = this.salesmanService.findById(oportunity.getSalesmanId());
 
-            updatedOportunity.setCustomer(oportunity.getCustomer());
-            updatedOportunity.setSalesman(oportunity.getSalesman());
-            updatedOportunity.setCourse(oportunity.getCourse());
-            updatedOportunity.setInterations(oportunity.getInterations());
-            updatedOportunity.setSale(oportunity.getSale());
-            updatedOportunity.setSalesStatus(oportunity.getSalesStatus());
-            updatedOportunity.setInitiatedAt(oportunity.getInitiatedAt());
-            updatedOportunity.setFinishedAt(oportunity.getFinishedAt());
+            existingOportunity.setSalesman(salesman);
+            existingOportunity.setCourse(course);
+            existingOportunity.setSalesStatus(oportunity.getSalesStatus());
+            existingOportunity.setFinishedAt(oportunity.getFinishedAt());
+            oportunityRepository.save(existingOportunity);
+            ResponseOportunityDTO response = new ResponseOportunityDTO(existingOportunity);
 
-            return oportunityRepository.save(updatedOportunity);
+            return response;
         } else {
             return null;
         }
     }
 
-    public List<OportunityEntity> listAll() {
-        return oportunityRepository.findAll();
+    public List<ResponseOportunityDTO> listAll() {
+        List<OportunityEntity> opportunities = oportunityRepository.findAll();
+
+        return opportunities.stream().map(ResponseOportunityDTO::new).toList();
     }
 
     public void delete(Integer id) {

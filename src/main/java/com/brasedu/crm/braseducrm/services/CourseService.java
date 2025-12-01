@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.brasedu.crm.braseducrm.dto.response.ResponseCourseDTO;
 import com.brasedu.crm.braseducrm.entities.CourseEntity;
 import com.brasedu.crm.braseducrm.repositories.CourseRepository;
 
@@ -37,8 +38,10 @@ public class CourseService {
         }
     }
 
-    public List<CourseEntity> listAll() {
-        return courseRepository.findAll();
+    public List<ResponseCourseDTO> listAll() {
+        List<CourseEntity> courses = courseRepository.findAll();
+
+        return courses.stream().map(ResponseCourseDTO::new).toList();
     }
 
     public CourseEntity findById(int id) {

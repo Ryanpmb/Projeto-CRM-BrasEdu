@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.brasedu.crm.braseducrm.dto.CreateCustomerDto;
+import com.brasedu.crm.braseducrm.dto.request.CreateCustomerDto;
+import com.brasedu.crm.braseducrm.dto.response.ResponseCustomerDTO;
 import com.brasedu.crm.braseducrm.entities.CustomerEntity;
 import com.brasedu.crm.braseducrm.enums.OportunityStatus;
 import com.brasedu.crm.braseducrm.repositories.CustomerRepository;
@@ -47,8 +48,10 @@ public class CustomerService {
         return customerRepository.save(olderCustomer);
     }
 
-    public List<CustomerEntity> findAll() {
-        return customerRepository.findAll();
+    public List<ResponseCustomerDTO> findAll() {
+        List<CustomerEntity> customers = customerRepository.findAll();
+
+        return customers.stream().map(ResponseCustomerDTO::new).toList();
     }
 
     public void deleteById(String id) {

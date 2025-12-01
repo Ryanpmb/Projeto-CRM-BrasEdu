@@ -1,4 +1,4 @@
-package com.brasedu.crm.braseducrm.dto;
+package com.brasedu.crm.braseducrm.dto.request;
 
 import lombok.Data;
 

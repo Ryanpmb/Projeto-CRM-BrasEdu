@@ -1,8 +1,11 @@
 package com.brasedu.crm.braseducrm.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.brasedu.crm.braseducrm.dto.CreateSalesmanDto;
+import com.brasedu.crm.braseducrm.dto.request.CreateSalesmanDto;
+import com.brasedu.crm.braseducrm.dto.response.ResponseSalesmanDTO;
 import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
 import com.brasedu.crm.braseducrm.repositories.SalesmanRepository;
 import com.brasedu.crm.braseducrm.security.SecurityConfig;
@@ -42,8 +45,10 @@ public class SalesmanService {
         return salesmanRepository.save(olderSalesman);
     }
 
-    public Iterable<SalesmanEntity> findAll() {
-        return salesmanRepository.findAll();
+    public Iterable<ResponseSalesmanDTO> findAll() {
+        List<SalesmanEntity> salesmans = salesmanRepository.findAll();
+
+        return salesmans.stream().map(ResponseSalesmanDTO::new).toList();
     }
 
     public void deleteById(String id) {

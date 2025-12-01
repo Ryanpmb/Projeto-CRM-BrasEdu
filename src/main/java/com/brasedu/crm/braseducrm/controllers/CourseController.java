@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brasedu.crm.braseducrm.dto.response.ResponseCourseDTO;
 import com.brasedu.crm.braseducrm.entities.CourseEntity;
 import com.brasedu.crm.braseducrm.services.CourseService;
 
@@ -27,7 +28,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<CourseEntity>> listAll() {
+    public ResponseEntity<List<ResponseCourseDTO>> listAll() {
         return ResponseEntity.ok(courseService.listAll());
     }
 

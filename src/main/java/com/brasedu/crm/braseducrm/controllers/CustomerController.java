@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brasedu.crm.braseducrm.dto.CreateCustomerDto;
+import com.brasedu.crm.braseducrm.dto.request.CreateCustomerDto;
+import com.brasedu.crm.braseducrm.dto.response.ResponseCustomerDTO;
 import com.brasedu.crm.braseducrm.entities.CustomerEntity;
 import com.brasedu.crm.braseducrm.services.CustomerService;
 
@@ -60,8 +61,8 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerEntity>> getAllCustomers() {
-        List<CustomerEntity> customers = customerService.findAll();
+    public ResponseEntity<List<ResponseCustomerDTO>> getAllCustomers() {
+        List<ResponseCustomerDTO> customers = customerService.findAll();
         return ResponseEntity.ok(customers);
     }
 

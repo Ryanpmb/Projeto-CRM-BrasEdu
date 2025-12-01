@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brasedu.crm.braseducrm.dto.CreateSalesmanDto;
+import com.brasedu.crm.braseducrm.dto.request.CreateSalesmanDto;
+import com.brasedu.crm.braseducrm.dto.response.ResponseSalesmanDTO;
 import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
 import com.brasedu.crm.braseducrm.services.SalesmanService;
 
@@ -57,8 +58,8 @@ public class SalesmanController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<SalesmanEntity>> getAllCustomers() {
-        Iterable<SalesmanEntity> salesmans = salesmanService.findAll();
+    public ResponseEntity<Iterable<ResponseSalesmanDTO>> getAllCustomers() {
+        Iterable<ResponseSalesmanDTO> salesmans = salesmanService.findAll();
         return ResponseEntity.ok(salesmans);
     }
 

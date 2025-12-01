@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class SaleEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @OneToOne
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="oportunity_id", unique=true)
     private OportunityEntity oportunity;
     @Column(name="sold_in")
