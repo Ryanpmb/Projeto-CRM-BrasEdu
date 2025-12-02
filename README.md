@@ -14,7 +14,7 @@ Para o desenvolvimento do projeto, foram usadas as seguintes tecnologias:
 
 Repositório do front-end: https://github.com/Ryanpmb/braseedu-crm
 
-Projeto desenvolvido por:
+# Projeto desenvolvido por:
 - Ariel Lourenço Traballi
 - Ryan Pablo Brito
 - Vinicius Fernandes Medina
