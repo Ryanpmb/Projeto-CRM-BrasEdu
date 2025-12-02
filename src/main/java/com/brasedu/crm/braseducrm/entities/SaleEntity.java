@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="oportunities")
+@Table(name="sales")
 @Entity()
 public class SaleEntity {
     @Id
