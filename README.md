@@ -19,7 +19,7 @@ Para rodar o projeto localmente, você precisará ter o **Docker** e o **Docker 
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone [https://github.com/SeuUsuario/Projeto-CRM-BrasEdu.git](https://github.com/SeuUsuario/Projeto-CRM-BrasEdu.git)
+    git clone https://github.com/Ryanpmb/Projeto-CRM-BrasEdu.git
     ```
 2.  **Inicie os Serviços:** (Back-end e SQL Server)
     ```bash
@@ -28,7 +28,7 @@ Para rodar o projeto localmente, você precisará ter o **Docker** e o **Docker 
 3.  A API estará disponível em: `http://localhost:8080`
 4.  Consulte o README do front-end para iniciar a interface de usuário.
 
-# Projeto Desenvolvido Por:
+## Projeto Desenvolvido Por:
 - Ariel Lourenço Traballi
 - Ryan Pablo Brito
 - Vinicius Fernandes Medina
