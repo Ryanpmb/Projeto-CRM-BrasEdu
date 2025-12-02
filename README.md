@@ -1,11 +1,11 @@
 # Projeto-CRM-BrasEdu
 Projeto interdisciplinar da FATEC Rio Preto
 
-# CRM BrasEdu
+# 💻 CRM BrasEdu
 Um CRM simples, mas muito eficaz, o BrasEdu busca facilitar a conversão e o 
 controle dos leads gerados.
 
-# Tecnologias Utilizadas
+## 🌐 Tecnologias Utilizadas
 Para o desenvolvimento do projeto, foram usadas as seguintes tecnologias:
   
 - Java (Java 21, Spring Boot, JPA, SQL Server Driver (JDBC), Spring Security, JWT (JSON Web Token), Maven, Lombok, Bean Validation) 
