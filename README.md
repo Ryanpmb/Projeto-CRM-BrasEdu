@@ -1,7 +1,7 @@
 # Projeto-CRM-BrasEdu
 Projeto interdisciplinar da FATEC Rio Preto
 
-# 💻 CRM BrasEdu
+## 💻 CRM BrasEdu
 Um CRM simples, mas muito eficaz, o BrasEdu busca facilitar a conversão e o 
 controle dos leads gerados.
 
@@ -20,11 +20,10 @@ Para rodar o projeto localmente, você precisará ter o **Docker** e o **Docker 
 1.  **Clone o Repositório:**
     ```bash
     git clone [https://github.com/SeuUsuario/Projeto-CRM-BrasEdu.git](https://github.com/SeuUsuario/Projeto-CRM-BrasEdu.git)
-    cd Projeto-CRM-BrasEdu
     ```
 2.  **Inicie os Serviços:** (Back-end e SQL Server)
     ```bash
-    docker-compose up --build
+    docker-compose up
     ```
 3.  A API estará disponível em: `http://localhost:8080`
 4.  Consulte o README do front-end para iniciar a interface de usuário.
