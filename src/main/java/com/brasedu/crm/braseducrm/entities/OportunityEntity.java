@@ -33,16 +33,16 @@ public class OportunityEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="customer_id")
     private CustomerEntity customer;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="salesman_id")
     private SalesmanEntity salesman;
-    @ManyToOne (fetch=FetchType.LAZY)
+    @ManyToOne (fetch=FetchType.EAGER)
     @JoinColumn(name="course_id")
     private CourseEntity course;
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.EAGER)
     private List<InterationEntity> interations = new ArrayList<>();
     @OneToOne(mappedBy="oportunity")
     private SaleEntity sale;

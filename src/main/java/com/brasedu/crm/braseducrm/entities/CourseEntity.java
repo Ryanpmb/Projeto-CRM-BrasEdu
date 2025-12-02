@@ -3,6 +3,8 @@ package com.brasedu.crm.braseducrm.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,6 +28,7 @@ public class CourseEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy="course", fetch=FetchType.LAZY)
+    @JsonIgnore
     private  List<OportunityEntity> oportunities = new ArrayList<>();
     @Column(name="name", length=150)
     private String name;

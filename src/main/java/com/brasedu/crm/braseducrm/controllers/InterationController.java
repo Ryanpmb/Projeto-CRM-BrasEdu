@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brasedu.crm.braseducrm.dto.request.CreateInterationDTO;
+import com.brasedu.crm.braseducrm.dto.response.ResponseInterationDTO;
 import com.brasedu.crm.braseducrm.entities.InterationEntity;
 import com.brasedu.crm.braseducrm.services.InterationService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,13 +28,13 @@ public class InterationController {
     private final InterationService interationService;
 
     @GetMapping
-    public ResponseEntity<List<InterationEntity>> listAll() {
-        List<InterationEntity> list = interationService.listAll();
+    public ResponseEntity<List<ResponseInterationDTO>> listAll() {
+        List<ResponseInterationDTO> list = interationService.listAll();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
-    public ResponseEntity<InterationEntity> include(@RequestBody InterationEntity interation) {
+    public ResponseEntity<InterationEntity> include(@Valid @RequestBody CreateInterationDTO interation) {
         InterationEntity newInteration = interationService.include(interation);
 
         if (newInteration != null) {

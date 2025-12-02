@@ -67,6 +67,12 @@ public class OportunityService {
         return opportunities.stream().map(ResponseOportunityDTO::new).toList();
     }
 
+    public OportunityEntity findById(int id) {
+        OportunityEntity oportunityEntity = oportunityRepository.findById(id).orElse(null);
+
+        return oportunityEntity;
+    }
+
     public void delete(Integer id) {
         oportunityRepository.deleteById(id);
     }

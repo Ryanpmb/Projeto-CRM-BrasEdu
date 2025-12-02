@@ -29,7 +29,7 @@ public class InterationEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="oportunity_id")
     private OportunityEntity oportunity;
     @Column(name="interation_date")

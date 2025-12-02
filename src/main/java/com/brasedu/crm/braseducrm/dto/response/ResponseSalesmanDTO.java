@@ -14,6 +14,8 @@ public class ResponseSalesmanDTO {
     String phone;
     LocalDate birthDate;
     String departament;
+    int opportunitiesQuantities;
+    int closedSales;
 
     public ResponseSalesmanDTO(SalesmanEntity entity){
         this.id = entity.getId();
@@ -22,5 +24,7 @@ public class ResponseSalesmanDTO {
         this.phone = entity.getPhone();
         this.birthDate = entity.getBirthDate();
         this.departament = entity.getDepartament();
+        this.opportunitiesQuantities = entity.getOportunities().size();
+        this.closedSales = entity.getSales().size();
     }
 }

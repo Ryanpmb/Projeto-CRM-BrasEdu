@@ -1,7 +1,9 @@
 package com.brasedu.crm.braseducrm.enums;
 
 public enum InterationType {
-    CALL,
+    PHONE,
     WHATSAPP,
-    EMAIL
+    EMAIL,
+    OTHER,
+    MEET
 }
