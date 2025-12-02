@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.brasedu.crm.braseducrm.dto.request.CreateOpportunityDto;
 import com.brasedu.crm.braseducrm.dto.request.UpdateOpportunityDTO;
 import com.brasedu.crm.braseducrm.dto.response.ResponseOportunityDTO;
-import com.brasedu.crm.braseducrm.entities.OportunityEntity;
 import com.brasedu.crm.braseducrm.services.OportunityService;
 
 import jakarta.validation.Valid;
@@ -35,8 +34,8 @@ public class OportunityController {
     }
 
     @PostMapping
-    public ResponseEntity<OportunityEntity> include(@Valid @RequestBody CreateOpportunityDto oportunity) {
-        OportunityEntity newOportunity = oportunityService.include(oportunity);
+    public ResponseEntity<ResponseOportunityDTO> include(@Valid @RequestBody CreateOpportunityDto oportunity) {
+        ResponseOportunityDTO newOportunity = oportunityService.include(oportunity);
         
         if (newOportunity != null) {
             return new ResponseEntity<>(newOportunity, HttpStatus.CREATED);

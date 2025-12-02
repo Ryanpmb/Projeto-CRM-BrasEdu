@@ -1,5 +1,6 @@
 package com.brasedu.crm.braseducrm.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class OportunityService {
     private final CustomerService customerService;
     private final SalesmanService salesmanService;
 
-    public OportunityEntity include(CreateOpportunityDto oportunity) {
+    public ResponseOportunityDTO include(CreateOpportunityDto oportunity) {
         CourseEntity course = this.courseService.findById(oportunity.getCourseId());
         CustomerEntity customer = this.customerService.findById(oportunity.getCustomerId());
         SalesmanEntity salesman = this.salesmanService.findById(oportunity.getSalesmanId());
@@ -32,9 +33,11 @@ public class OportunityService {
         oportunityEntity.setCourse(course);
         oportunityEntity.setCustomer(customer);
         oportunityEntity.setSalesman(salesman);
-        oportunityEntity.setSalesStatus(oportunity.getStatus());
+        oportunityEntity.setSalesStatus(oportunity.getSalesStatus());
+        oportunityEntity.setInitiatedAt(LocalDate.now());
+        oportunityRepository.save(oportunityEntity);
 
-        return oportunityRepository.save(oportunityEntity);
+        return new ResponseOportunityDTO(oportunityEntity);
     }
 
     public ResponseOportunityDTO edit(int id, UpdateOpportunityDTO oportunity) {
@@ -46,6 +49,7 @@ public class OportunityService {
 
             existingOportunity.setSalesman(salesman);
             existingOportunity.setCourse(course);
+            System.out.println(oportunity.getSalesStatus());
             existingOportunity.setSalesStatus(oportunity.getSalesStatus());
             existingOportunity.setFinishedAt(oportunity.getFinishedAt());
             oportunityRepository.save(existingOportunity);

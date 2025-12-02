@@ -11,6 +11,6 @@ public class CreateOpportunityDto {
     public String customerId;
     public String salesmanId;
     public int courseId;
-    public SalesStatus status;
+    public SalesStatus salesStatus;
     public LocalDate finished_in;
 }
