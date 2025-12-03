@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.brasedu.crm.braseducrm.entities.OportunityEntity;
+import com.brasedu.crm.braseducrm.enums.PaymentMethod;
 import com.brasedu.crm.braseducrm.enums.SalesStatus;
 
 import lombok.Data;
@@ -22,6 +23,7 @@ public class ResponseOportunityDTO {
     SalesStatus salesStatus;
     LocalDate initiatedAt;
     LocalDate finishedAt;
+    PaymentMethod paymentMethod;
 
     public ResponseOportunityDTO(OportunityEntity entity){
         this.id = entity.getId();
@@ -38,5 +40,6 @@ public class ResponseOportunityDTO {
         .orElse(null);
         this.finishedAt = Optional.ofNullable(entity.getFinishedAt())
         .orElse(null);
+        this.paymentMethod = entity.getPaymentMethod();
     }
 }

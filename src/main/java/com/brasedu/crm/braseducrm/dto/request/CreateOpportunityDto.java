@@ -2,6 +2,7 @@ package com.brasedu.crm.braseducrm.dto.request;
 
 import java.time.LocalDate;
 
+import com.brasedu.crm.braseducrm.enums.PaymentMethod;
 import com.brasedu.crm.braseducrm.enums.SalesStatus;
 
 import lombok.Data;
@@ -13,4 +14,5 @@ public class CreateOpportunityDto {
     public int courseId;
     public SalesStatus salesStatus;
     public LocalDate finished_in;
+    public PaymentMethod paymentMethod;
 }

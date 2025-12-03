@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.brasedu.crm.braseducrm.enums.PaymentMethod;
 import com.brasedu.crm.braseducrm.enums.SalesStatus;
 
 import jakarta.persistence.Column;
@@ -49,6 +50,9 @@ public class OportunityEntity {
     @Column(name="status")
     @Enumerated(value=EnumType.STRING)
     private SalesStatus salesStatus;
+    @Column(name="payment_method")
+    @Enumerated(value=EnumType.STRING)
+    private PaymentMethod PaymentMethod;
     @Column(name="initiated_at")
     private LocalDate initiatedAt;
     @Column(name="finished_in")

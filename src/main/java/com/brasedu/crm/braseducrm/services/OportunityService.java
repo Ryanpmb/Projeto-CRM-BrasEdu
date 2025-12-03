@@ -33,6 +33,7 @@ public class OportunityService {
         oportunityEntity.setCourse(course);
         oportunityEntity.setCustomer(customer);
         oportunityEntity.setSalesman(salesman);
+        oportunityEntity.setPaymentMethod(oportunity.getPaymentMethod());
         oportunityEntity.setSalesStatus(oportunity.getSalesStatus());
         oportunityEntity.setInitiatedAt(LocalDate.now());
         oportunityRepository.save(oportunityEntity);
@@ -49,7 +50,7 @@ public class OportunityService {
 
             existingOportunity.setSalesman(salesman);
             existingOportunity.setCourse(course);
-            System.out.println(oportunity.getSalesStatus());
+            existingOportunity.setPaymentMethod(oportunity.getPaymentMethod());
             existingOportunity.setSalesStatus(oportunity.getSalesStatus());
             existingOportunity.setFinishedAt(oportunity.getFinishedAt());
             oportunityRepository.save(existingOportunity);
