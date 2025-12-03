@@ -15,7 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -33,10 +32,10 @@ public class SaleEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="oportunity_id", unique=true)
     private OportunityEntity oportunity;
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "salesman_id")
     private SalesmanEntity salesman;
     @Column(name="sold_in")

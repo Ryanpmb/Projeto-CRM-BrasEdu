@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -26,7 +27,7 @@ public class SalesmanEntity extends UserEntity {
     @OneToMany(mappedBy="salesman")
     @JsonIgnore
     private List<OportunityEntity> oportunities = new ArrayList<>();
-    @OneToMany(mappedBy = "salesman")
+    @OneToMany(mappedBy = "salesman", fetch = FetchType.EAGER)
     private List<SaleEntity> sales = new ArrayList<>();
     @Column(name="departament", length=150)
     private String departament;
