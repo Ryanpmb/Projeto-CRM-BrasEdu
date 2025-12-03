@@ -1,5 +1,6 @@
 package com.brasedu.crm.braseducrm.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class CustomerService {
             customerEntity.setBirthDate(newCustumer.birthDate);
             customerEntity.setLeadStatus(OportunityStatus.NEW);
             customerEntity.setOrigin(newCustumer.origin);
+            customerEntity.setRegisterDate(LocalDate.now());
             return customerRepository.save(customerEntity);
         } catch (Exception e) {
             throw new Exception("Stored user fail");
