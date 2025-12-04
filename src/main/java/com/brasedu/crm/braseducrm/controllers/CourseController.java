@@ -13,48 +13,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brasedu.crm.braseducrm.dto.response.ResponseCourseDTO;
 import com.brasedu.crm.braseducrm.entities.CourseEntity;
 import com.brasedu.crm.braseducrm.services.CourseService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/course")
+@RequestMapping("/course")
 public class CourseController {
+
     private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<CourseEntity>> listAll() {
-        List<CourseEntity> list = courseService.listAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<ResponseCourseDTO>> listAll() {
+        return ResponseEntity.ok(courseService.listAll());
     }
 
     @PostMapping
-    public ResponseEntity<CourseEntity> include(@RequestBody CourseEntity course) {
+    public ResponseEntity<CourseEntity> include(@Valid @RequestBody CourseEntity course) {
         CourseEntity newCourse = courseService.include(course);
 
-        if (newCourse != null) {
-            return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return newCourse != null
+            ? new ResponseEntity<>(newCourse, HttpStatus.CREATED)
+            : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/id")
-    public ResponseEntity<CourseEntity> edit(@PathVariable int id, @RequestBody CourseEntity course) {
+    @PutMapping("/{id}")
+    public ResponseEntity<CourseEntity> edit(@Valid @PathVariable int id, @RequestBody CourseEntity course) {
         CourseEntity updated = courseService.edit(id, course);
 
-        if (updated != null) {
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return updated != null
+            ? new ResponseEntity<>(updated, HttpStatus.OK)
+            : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         courseService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+

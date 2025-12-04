@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.brasedu.crm.braseducrm.enums.PaymentMethod;
 import com.brasedu.crm.braseducrm.enums.SalesStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,22 +34,25 @@ public class OportunityEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="customer_id")
     private CustomerEntity customer;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="salesman_id")
     private SalesmanEntity salesman;
-    @ManyToOne
+    @ManyToOne (fetch=FetchType.EAGER)
     @JoinColumn(name="course_id")
     private CourseEntity course;
-    @OneToMany
+    @OneToMany(fetch=FetchType.EAGER)
     private List<InterationEntity> interations = new ArrayList<>();
     @OneToOne(mappedBy="oportunity")
     private SaleEntity sale;
     @Column(name="status")
     @Enumerated(value=EnumType.STRING)
     private SalesStatus salesStatus;
+    @Column(name="payment_method")
+    @Enumerated(value=EnumType.STRING)
+    private PaymentMethod PaymentMethod;
     @Column(name="initiated_at")
     private LocalDate initiatedAt;
     @Column(name="finished_in")

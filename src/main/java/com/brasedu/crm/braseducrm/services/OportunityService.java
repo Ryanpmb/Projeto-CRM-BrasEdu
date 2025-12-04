@@ -1,11 +1,17 @@
 package com.brasedu.crm.braseducrm.services;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.brasedu.crm.braseducrm.dto.request.CreateOpportunityDto;
+import com.brasedu.crm.braseducrm.dto.request.UpdateOpportunityDTO;
+import com.brasedu.crm.braseducrm.dto.response.ResponseOportunityDTO;
+import com.brasedu.crm.braseducrm.entities.CourseEntity;
+import com.brasedu.crm.braseducrm.entities.CustomerEntity;
 import com.brasedu.crm.braseducrm.entities.OportunityEntity;
+import com.brasedu.crm.braseducrm.entities.SalesmanEntity;
 import com.brasedu.crm.braseducrm.repositories.OportunityRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -14,34 +20,58 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OportunityService {
     private final OportunityRepository oportunityRepository;
+    private final CourseService courseService;
+    private final CustomerService customerService;
+    private final SalesmanService salesmanService;
 
-    public OportunityEntity include(OportunityEntity oportunity) {
-        return oportunityRepository.save(oportunity);
+    public ResponseOportunityDTO include(CreateOpportunityDto oportunity) {
+        CourseEntity course = this.courseService.findById(oportunity.getCourseId());
+        CustomerEntity customer = this.customerService.findById(oportunity.getCustomerId());
+        SalesmanEntity salesman = this.salesmanService.findById(oportunity.getSalesmanId());
+
+        OportunityEntity oportunityEntity = new OportunityEntity();
+        oportunityEntity.setCourse(course);
+        oportunityEntity.setCustomer(customer);
+        oportunityEntity.setSalesman(salesman);
+        oportunityEntity.setPaymentMethod(oportunity.getPaymentMethod());
+        oportunityEntity.setSalesStatus(oportunity.getSalesStatus());
+        oportunityEntity.setInitiatedAt(LocalDate.now());
+        oportunityRepository.save(oportunityEntity);
+
+        return new ResponseOportunityDTO(oportunityEntity);
     }
 
-    public OportunityEntity edit(int id, OportunityEntity oportunity) {
-        Optional<OportunityEntity> existingOportunity = oportunityRepository.findById(id);
+    public ResponseOportunityDTO edit(int id, UpdateOpportunityDTO oportunity) {
+        OportunityEntity existingOportunity = oportunityRepository.findById(id).orElse(null);
 
-        if (existingOportunity.isPresent()) {
-            OportunityEntity updatedOportunity = existingOportunity.get();
+        if (existingOportunity != null) {
+            CourseEntity course = this.courseService.findById(oportunity.getCourseId());
+            SalesmanEntity salesman = this.salesmanService.findById(oportunity.getSalesmanId());
 
-            updatedOportunity.setCustomer(oportunity.getCustomer());
-            updatedOportunity.setSalesman(oportunity.getSalesman());
-            updatedOportunity.setCourse(oportunity.getCourse());
-            updatedOportunity.setInterations(oportunity.getInterations());
-            updatedOportunity.setSale(oportunity.getSale());
-            updatedOportunity.setSalesStatus(oportunity.getSalesStatus());
-            updatedOportunity.setInitiatedAt(oportunity.getInitiatedAt());
-            updatedOportunity.setFinishedAt(oportunity.getFinishedAt());
+            existingOportunity.setSalesman(salesman);
+            existingOportunity.setCourse(course);
+            existingOportunity.setPaymentMethod(oportunity.getPaymentMethod());
+            existingOportunity.setSalesStatus(oportunity.getSalesStatus());
+            existingOportunity.setFinishedAt(oportunity.getFinishedAt());
+            oportunityRepository.save(existingOportunity);
+            ResponseOportunityDTO response = new ResponseOportunityDTO(existingOportunity);
 
-            return oportunityRepository.save(updatedOportunity);
+            return response;
         } else {
             return null;
         }
     }
 
-    public List<OportunityEntity> listAll() {
-        return oportunityRepository.findAll();
+    public List<ResponseOportunityDTO> listAll() {
+        List<OportunityEntity> opportunities = oportunityRepository.findAll();
+
+        return opportunities.stream().map(ResponseOportunityDTO::new).toList();
+    }
+
+    public OportunityEntity findById(int id) {
+        OportunityEntity oportunityEntity = oportunityRepository.findById(id).orElse(null);
+
+        return oportunityEntity;
     }
 
     public void delete(Integer id) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.brasedu.crm.braseducrm.enums.OportunityStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name="userId")
 public class CustomerEntity extends UserEntity {
     @OneToMany(mappedBy="customer")
+    @JsonIgnore
     private List<OportunityEntity> oportunities = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @Column(name="lead_status")

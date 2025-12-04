@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brasedu.crm.braseducrm.entities.OportunityEntity;
+import com.brasedu.crm.braseducrm.dto.request.CreateOpportunityDto;
+import com.brasedu.crm.braseducrm.dto.request.UpdateOpportunityDTO;
+import com.brasedu.crm.braseducrm.dto.response.ResponseOportunityDTO;
 import com.brasedu.crm.braseducrm.services.OportunityService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,15 +28,15 @@ public class OportunityController {
     private final OportunityService oportunityService;
 
     @GetMapping
-    public ResponseEntity<List<OportunityEntity>> listAll() {
-        List<OportunityEntity> list = oportunityService.listAll();
+    public ResponseEntity<List<ResponseOportunityDTO>> listAll() {
+        List<ResponseOportunityDTO> list = oportunityService.listAll();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
-    public ResponseEntity<OportunityEntity> include(@RequestBody OportunityEntity oportunity) {
-        OportunityEntity newOportunity = oportunityService.include(oportunity);
-
+    public ResponseEntity<ResponseOportunityDTO> include(@Valid @RequestBody CreateOpportunityDto oportunity) {
+        ResponseOportunityDTO newOportunity = oportunityService.include(oportunity);
+        
         if (newOportunity != null) {
             return new ResponseEntity<>(newOportunity, HttpStatus.CREATED);
         } else {
@@ -41,9 +44,9 @@ public class OportunityController {
         }
     }
 
-    @PutMapping("/id")
-    public ResponseEntity<OportunityEntity> edit(@PathVariable int id, @RequestBody OportunityEntity oportunity) {
-        OportunityEntity updated = oportunityService.edit(id, oportunity);
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseOportunityDTO> edit(@PathVariable int id, @RequestBody UpdateOpportunityDTO oportunity) {
+        ResponseOportunityDTO updated = oportunityService.edit(id, oportunity);
 
         if (updated != null) {
             return new ResponseEntity<>(updated, HttpStatus.OK);
