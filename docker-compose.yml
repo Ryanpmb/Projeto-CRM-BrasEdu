@@ -24,12 +24,15 @@ services:
     volumes:
       - sqlserver_data:/var/opt/mssql
       - ./docker/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/database/continue.sql:/docker-entrypoint-initdb.d/continue.sql
     command: >
       /bin/bash -c "
         /opt/mssql/bin/sqlservr &
         pid=\$!;
         sleep 20;
         /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Crm@1234' -C -i docker-entrypoint-initdb.d/init.sql || true;
+        sleep 30;
+        /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Crm@1234' -C -i docker-entrypoint-initdb.d/continue.sql || true;
         wait \$pid
       "
 
