@@ -1,6 +1,9 @@
 use crmdb;
 GO
 
+SET QUOTED_IDENTIFIER ON;
+GO
+
 CREATE TRIGGER tg_store_sales
 ON oportunities
 AFTER UPDATE
