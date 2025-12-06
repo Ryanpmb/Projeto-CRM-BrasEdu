@@ -155,7 +155,7 @@ GO
 -- 2. Executa o comando de RESTORE DATABASE
 -----------------------------------------------------
 RESTORE DATABASE crmdb
-FROM DISK = 'C:\Backups\BackupCRMDB.bak'
+FROM DISK = '/var/opt/mssql/data/crmdb_full.bak'
 WITH 
     FILE = 1,
     REPLACE,
