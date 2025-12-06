@@ -54,3 +54,52 @@ INNER JOIN users as u on c.user_id = u.id
 INNER JOIN oportunities as o on c.user_id  = o.customer_id 
 INNER JOIN courses as co on o.course_id = co.id 
 GO
+
+USE crmdb;
+GO
+
+-- Backup
+
+-----------------------------------------------------
+-- 1. Cria o Job
+-----------------------------------------------------
+EXEC sp_add_job 
+    @job_name = N'BackupFullDiario';
+
+-----------------------------------------------------
+-- 2. Adiciona o Step (o comando de backup)
+-----------------------------------------------------
+EXEC sp_add_jobstep
+    @job_name = N'BackupFullDiario',
+    @step_name = N'Backup FULL',
+    @subsystem = N'TSQL',
+    @command = N'
+        BACKUP DATABASE crmdb
+        TO DISK = ''C:\Backups\MeuBanco_Full.bak''
+        WITH INIT, COMPRESSION;
+    ',
+    @retry_attempts = 0,
+    @retry_interval = 0;
+
+-----------------------------------------------------
+-- 3. Cria o agendamento (todo dia às 02:00)
+-----------------------------------------------------
+EXEC sp_add_schedule
+    @schedule_name = N'BackupFull_02h',
+    @freq_type = 4,          -- diário
+    @freq_interval = 1,      -- todo dia
+    @active_start_time = 020000; -- 02:00 AM
+
+-----------------------------------------------------
+-- 4. Liga o job ao agendamento
+-----------------------------------------------------
+EXEC sp_attach_schedule
+    @job_name = N'BackupFullDiario',
+    @schedule_name = N'BackupFull_02h';
+
+-----------------------------------------------------
+-- 5. Ativa o job
+-----------------------------------------------------
+EXEC sp_add_jobserver
+    @job_name = N'BackupFullDiario';
+GO
