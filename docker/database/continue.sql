@@ -112,7 +112,7 @@ EXEC sp_add_jobstep
     @subsystem = N'TSQL',
     @command = N'
         BACKUP DATABASE crmdb
-        TO DISK = ''C:\Backups\MeuBanco_Full.bak''
+        TO DISK = ''/var/opt/mssql/data/crmdb_full.bak''
         WITH INIT, COMPRESSION;
     ',
     @retry_attempts = 0,
