@@ -25,8 +25,9 @@ Para rodar o projeto localmente, você precisará ter o **Docker** e o **Docker 
     ```bash
     docker-compose up -d
     ```
-3.  A API estará disponível em: `http://localhost:8080`
-4.  Consulte o README do front-end para iniciar a interface de usuário.
+3.  Código completo na branch `develop`
+4.  A API estará disponível em: `http://localhost:8080`
+5.  Consulte o README do front-end para iniciar a interface de usuário.
 
 ## Projeto Desenvolvido Por:
 - Ariel Lourenço Traballi
