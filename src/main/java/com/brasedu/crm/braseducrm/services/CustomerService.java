@@ -51,7 +51,7 @@ public class CustomerService {
     }
 
     public List<ResponseCustomerDTO> findAll() {
-        List<CustomerEntity> customers = customerRepository.findAll();
+        List<CustomerEntity> customers = customerRepository.findAllByInactiveFalse();
 
         return customers.stream().map(ResponseCustomerDTO::new).toList();
     }

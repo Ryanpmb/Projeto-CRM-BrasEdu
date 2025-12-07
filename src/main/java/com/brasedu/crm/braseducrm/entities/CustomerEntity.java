@@ -37,4 +37,6 @@ public class CustomerEntity extends UserEntity {
     private LocalDate registerDate;
     @Column(name="origin", length=100)
     private String origin;
+    @Column(name="inactive")
+    private Boolean inactive = false;
 }

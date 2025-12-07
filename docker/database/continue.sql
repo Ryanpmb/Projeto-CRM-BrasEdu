@@ -63,26 +63,18 @@ INNER JOIN oportunities as o on c.user_id = o.customer_id
 INNER JOIN courses as co on o.course_id = co.id 
 GO
 
-CREATE PROCEDURE sp_opportunitiesWithDetails
+CREATE PROCEDURE sp_setInactiveCustomer
 (
-    @idOpportunity INT
+    @idCustomer VARCHAR(255)
 )
 AS
 BEGIN
     SET NOCOUNT ON;
+    BEGIN TRANSACTION;
     BEGIN TRY
-        BEGIN TRANSACTION;
-        SELECT 
-            o.id AS Id_Oportunidade,
-            c.name AS Nome_Cliente,
-            sm.name AS Nome_Vendedor,
-            co.name AS Nome_Curso,
-            o.sales_status AS Status_Venda
-        FROM oportunities AS o
-        INNER JOIN customers AS c ON c.user_id = o.customer_id
-        INNER JOIN salesmans AS sm ON sm.user_id = o.salesman_id
-        INNER JOIN courses AS co ON co.id = o.course_id
-        WHERE o.id = @idOpportunity
+        UPDATE Customers 
+        SET inactive = 1
+        WHERE user_id = @idCustomer;
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
